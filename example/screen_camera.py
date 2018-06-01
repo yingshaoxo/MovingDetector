@@ -6,6 +6,7 @@ import time
 
 box_size = 300//2
 
+
 def main():
     for i in list(range(3))[::-1]:
         print(i+1)
@@ -13,11 +14,13 @@ def main():
 
     while True:
         pos = pyautogui.position()
-        frame =  np.array(ImageGrab.grab(bbox=(pos[0]-box_size, pos[1]-box_size, pos[0]+box_size, pos[1]+box_size)))
-        cv2.imshow('window',cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+        frame = np.array(ImageGrab.grab(
+            bbox=(pos[0]-box_size, pos[1]-box_size, pos[0]+box_size, pos[1]+box_size)))
+        cv2.imshow('window', cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
 
         if cv2.waitKey(110) & 0xFF == 27:
             cv2.destroyAllWindows()
             break
+
 
 main()

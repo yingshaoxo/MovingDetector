@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <title>Video Streaming</title>
+    <style>
+	body, html {
+	    height: 100%;
+	}
+
+	.bg {
+	    /* Full height */
+	    height: 100%;
+
+	    /* Center and scale the image nicely */
+	    background-position: center;
+	    background-repeat: no-repeat;
+	    background-size: cover;
+	}
+    </style>
+  </head>
+  <body>
+    <img id="bg" src="{{ url_for('video_feed') }}">
+  </body>
+</html>

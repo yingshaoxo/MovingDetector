@@ -10,6 +10,7 @@ try:
 except Exception as e:
     print(e)
 
+
 class MovingDetector():
     def __init__(self):
         pass
@@ -21,9 +22,10 @@ class MovingDetector():
             print("Could not open camera")
             sys.exit()
 
-        history = 10#20    # 训练帧数
+        history = 10  # 20    # 训练帧数
 
-        bs = cv2.createBackgroundSubtractorKNN(detectShadows=True)  # 背景减除器，设置阴影检测
+        bs = cv2.createBackgroundSubtractorKNN(
+            detectShadows=True)  # 背景减除器，设置阴影检测
         #bs = cv2.createBackgroundSubtractorKNN(detectShadows=True)
         bs.setHistory(history)
 
@@ -43,14 +45,18 @@ class MovingDetector():
 
             # 对原始帧进行膨胀去噪
             th = cv2.threshold(fg_mask.copy(), 244, 255, cv2.THRESH_BINARY)[1]
-            th = cv2.erode(th, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3)), iterations=2)
-            dilated = cv2.dilate(th, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (8, 3)), iterations=2)
+            th = cv2.erode(th, cv2.getStructuringElement(
+                cv2.MORPH_ELLIPSE, (3, 3)), iterations=2)
+            dilated = cv2.dilate(th, cv2.getStructuringElement(
+                cv2.MORPH_ELLIPSE, (8, 3)), iterations=2)
             # 获取所有检测框
-            image, contours, hier = cv2.findContours(dilated, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
- 
+            image, contours, hier = cv2.findContours(
+                dilated, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
             if len(contours) != 0:
                 # find the biggest area
-                c = max(contours, key=cv2.contourArea) #c = min(contours, key=cv2.contourArea)
+                # c = min(contours, key=cv2.contourArea)
+                c = max(contours, key=cv2.contourArea)
                 # shrink area
                 rect = cv2.minAreaRect(c)
                 box = cv2.boxPoints(rect)
@@ -74,7 +80,8 @@ class MovingDetector():
 
         history = 10   # 训练帧数
 
-        bs = cv2.createBackgroundSubtractorKNN(detectShadows=True)   # 背景减除器，设置阴影检测
+        bs = cv2.createBackgroundSubtractorKNN(
+            detectShadows=True)   # 背景减除器，设置阴影检测
         bs.setHistory(history)
 
         frames = 0
@@ -88,7 +95,8 @@ class MovingDetector():
             right_bottom_x = mouse_x + record_box_size
             right_bottom_y = mouse_y + record_box_size
 
-            frame =  np.array(ImageGrab.grab(bbox=(left_top_x, left_top_y, right_bottom_x, right_bottom_y)))
+            frame = np.array(ImageGrab.grab(
+                bbox=(left_top_x, left_top_y, right_bottom_x, right_bottom_y)))
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
             fg_mask = bs.apply(frame)   # 获取 foreground mask
@@ -99,11 +107,14 @@ class MovingDetector():
 
             # 对原始帧进行膨胀去噪
             th = cv2.threshold(fg_mask.copy(), 244, 255, cv2.THRESH_BINARY)[1]
-            th = cv2.erode(th, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3)), iterations=2)
-            dilated = cv2.dilate(th, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (8, 3)), iterations=2)
+            th = cv2.erode(th, cv2.getStructuringElement(
+                cv2.MORPH_ELLIPSE, (3, 3)), iterations=2)
+            dilated = cv2.dilate(th, cv2.getStructuringElement(
+                cv2.MORPH_ELLIPSE, (8, 3)), iterations=2)
             # 获取所有检测框
-            image, contours, hier = cv2.findContours(dilated, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
- 
+            image, contours, hier = cv2.findContours(
+                dilated, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
             if len(contours) != 0:
                 # find the biggest area
                 c = max(contours, key=cv2.contourArea)
@@ -129,6 +140,7 @@ class MovingDetector():
 
             if cv2.waitKey(110) & 0xff == 27:
                 break
+
 
 if __name__ == '__main__':
     detector = MovingDetector()
