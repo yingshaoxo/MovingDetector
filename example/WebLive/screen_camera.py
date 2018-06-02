@@ -11,6 +11,8 @@ class VideoCamera(object):
 
         self.top_left = (self.screen_width//2, 0)
         self.lower_right = (self.screen_width, self.screen_height//2)
+        # self.top_left = (0, 0)
+        # self.lower_right = (self.screen_width, self.screen_height)
 
     def get_frame(self):
         frame = np.array(ImageGrab.grab(bbox=(

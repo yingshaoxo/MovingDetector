@@ -1,5 +1,5 @@
 from flask import Flask, render_template, Response
-from quarter_screen_camera import VideoCamera
+from screen_camera import VideoCamera
 
 app = Flask(__name__)
 
