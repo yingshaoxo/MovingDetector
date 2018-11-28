@@ -170,4 +170,4 @@ def func(return_values):
 
 if __name__ == '__main__':
     detector = MovingDetector()
-    detector.camera_detect(device=1, func=func)
+    detector.camera_detect(device=0, func=func)
